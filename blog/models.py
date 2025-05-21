@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 STATUS = ((0, "Draft"), (1, "Published"))
+CONTINENT = (
+    (0, "South/Central America"), (1, "North America"), (2, "Europe"), (3, "Africa"), (4, "Asia"), (5, "Austraila")
+    )
 # Create your models here.
 
 
@@ -11,14 +15,15 @@ class Post(models.Model):
     """
     Store a single blog post entry related to a User
     """
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField('Title', max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
     featured_image = CloudinaryField('image', default='placeholder')
-    content = models.TextField()
+    content = CKEditor5Field('Text', config_name='extends')
     excerpt = models.TextField(blank=True)
+    continent = models.IntegerField(choices=CONTINENT, default=2)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=0)
