@@ -46,13 +46,13 @@
                 <!-- Loop to iterate through every comment -->
                 {% for comment in comments %}
                 <div class="p-2 comments
-          {% if not comment.approved and comment.author == user %}
-          faded-text{% elif not comment.approved %} d-none{% endif %}">
+                {% if not comment.approved and comment.author == user %}
+                faded-text{% elif not comment.approved %} d-none{% endif %}">
                     <p class="font-weight-bold">
                         {{ comment.author }}
                         <span class="font-weight-normal">
-              {{ comment.created_on }}
-            </span> wrote:
+                            {{ comment.created_on }}
+                        </span> wrote:
                     </p>
                     <div id="comment{{ comment.id }}">
                         {{ comment.body | linebreaks }}
@@ -62,8 +62,8 @@
                         This comment is awaiting approval
                     </p>
                     {% endif %} {% if user.is_authenticated and comment.author == user %}
-                    <button class="btn btn-delete" data-comment_id="{{ comment.id }}">Delete</button>
-                    <button class="btn btn-edit" data-comment_id="{{ comment.id }}">Edit</button> {% endif %}
+                    <button class="btn btn-edit" data-comment_id="{{ comment.id }}">Edit</button>
+                    <button class="btn btn-delete" data-comment_id="{{ comment.id }}">Delete</button>{% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -74,7 +74,7 @@
                 {% if user.is_authenticated %}
                 <h3>Leave a comment:</h3>
                 <p>Posting as: {{ user.username }}</p>
-                <form id="commentForm" method="post" style="margin-top: 1.3em;">
+                <form id="commentForm" method="post">
                     {{ comment_form | crispy }} {% csrf_token %}
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
                 </form>

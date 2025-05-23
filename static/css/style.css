@@ -49,5 +49,9 @@ h2 {
 }
 
 .approval-text {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(249, 105, 14, 0.6);
+}
+
+#commentForm {
+    margin-top: 1.3em;
 }
