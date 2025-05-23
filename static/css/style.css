@@ -43,3 +43,11 @@ h2 {
     position: relative;
     overflow: hidden;
 }
+
+.faded-text {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.approval-text {
+    color: rgba(0, 0, 0, 0.7);
+}
