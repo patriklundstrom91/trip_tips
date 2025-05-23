@@ -8,7 +8,7 @@
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.author }} | {{ post.created_on }}</p>
             </div>
-            <div class="d-none d-md-block col-md-6 masthead-image">
+            <div class="col-md-6 bloghead-image">
                 {% if "placeholder" in post.featured_image.url %}
                 <img class="card-img-top scale" src="{% static 'images/default.jpg' %}" alt="placeholder image"> {% else %}
                 <img class="card-img-top scale" src=" {{ post.featured_image.url }}" alt="{{ post.title }}"> {% endif %}

@@ -19,3 +19,27 @@ body {
 h2 {
     font-family: var(--headline-font);
 }
+
+.scale {
+    width: 100%;
+    height: auto;
+}
+
+.bloghead {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    height: 33vh;
+    width: 100%;
+}
+
+.bloghead-text {
+    background-color: grey;
+    color: white;
+    position: relative;
+}
+
+.bloghead-image {
+    position: relative;
+    overflow: hidden;
+}
