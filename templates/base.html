@@ -54,7 +54,12 @@
         </div>
     </nav>
     <!-- content from other html files to show post_list or post_detail etc -->
-    <main>
+    <main class="flex-shrink-0">
+        {% if user.is_authenticated %}
+        <p class="text-end m-3">Logged in as {{ user }}</p>
+        {% else %}
+        <p class="text-end m-3">Not logged in</p>
+        {% endif %}
         <div id="content">
             {% block content %} {% endblock %}
         </div>
@@ -62,9 +67,10 @@
     <!-- Footer -->
     <footer class="footer mt-auto">
         <p class="text-center">Made by Patrik L</p>
-        <p class="text-center">Follow us on socials: <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-square-x-twitter"></i>
+        <p class="text-center">Follow us on socials:
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Visit our Facebook (opens in new tab)"><i class="fa-brands fa-square-facebook"></i></a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Visit our Instagram (opens in new tab)"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://x.com/?lang=en" target="_blank" rel="noopener" aria-label="Visit our Twitter (opens in new tab)"><i class="fa-brands fa-square-x-twitter"></i></a>
         </p>
     </footer>
     <!-- Load fontAwesome kit -->
