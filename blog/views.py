@@ -3,13 +3,27 @@ from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from .models import Post, Comment
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 
 # Create your views here.
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1)
     template_name = "blog/index.html"
     paginate_by = 6
+
+
+class AddPost(generic.CreateView):
+    """
+    Add blog post
+    """
+    template_name = 'blog/add_post.html'
+    model = Post
+
+    success_url = '/blog/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(AddPost, self).form_valid(form)
 
 
 def post_detail(request, slug):
@@ -87,3 +101,4 @@ def comment_delete(request, slug, comment_id):
         messages.add_message(request, messages.ERROR, 'Deletion failed, you can only delete your own comments!')
 
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+

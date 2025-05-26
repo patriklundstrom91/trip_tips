@@ -4,9 +4,10 @@
     <div class="container">
         <div class="row g-0">
             <div class="col-md-6 bloghead-text">
-                <!-- info about title, author and date created -->
+                <!-- info about the post -->
                 <h2>{{ post.title }}</h2>
-                <p>{{ post.author }} | {{ post.created_on }}</p>
+                <p>Continent: {{ post.get_continent_display }}</p>
+                <p>By {{ post.author }} | {{ post.created_on }}</p>
             </div>
             <div class="col-md-6 bloghead-image">
                 {% if "placeholder" in post.featured_image.url %}
