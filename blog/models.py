@@ -21,7 +21,7 @@ class Post(models.Model):
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
     featured_image = CloudinaryField('image', default='placeholder')
-    content = CKEditor5Field('Text', config_name='extends')
+    content = CKEditor5Field('Post content', config_name='extends')
     excerpt = models.TextField(blank=True)
     continent = models.IntegerField(choices=CONTINENT, default=2)
     created_on = models.DateTimeField(auto_now_add=True)

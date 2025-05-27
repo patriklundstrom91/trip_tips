@@ -1,29 +1,56 @@
 from django.shortcuts import render, get_object_or_404, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
+from django.utils.text import slugify
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
 # Create your views here.
 class PostList(generic.ListView):
+    """
+    List all published posts
+    """
     queryset = Post.objects.filter(status=1)
     template_name = "blog/index.html"
     paginate_by = 6
 
 
-class AddPost(generic.CreateView):
+class MyPosts(LoginRequiredMixin, generic.ListView):
+    """
+    List the post made by the present logged in user
+    """
+    template_name = "blog/index.html"
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)
+
+
+class AddPost(LoginRequiredMixin, generic.CreateView):
     """
     Add blog post
     """
     template_name = 'blog/add_post.html'
     model = Post
     form_class = PostForm
-    success_url = '/blog/'
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
+        """Checks that slug is unique or add suffix"""
+        base_slug = slugify(form.instance.title)
+        slug = base_slug
+        counter = 1
+        while Post.objects.filter(slug=slug).exists():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+        form.instance.slug = slug
         form.instance.author = self.request.user
-        return super(AddPost, self).form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, "Your post has been created, awaits admin approval!")
+        return response
 
 
 def post_detail(request, slug):

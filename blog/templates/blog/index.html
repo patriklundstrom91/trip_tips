@@ -9,26 +9,29 @@
             <div class="row">
                 {% for post in post_list %}
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="image-container">
-                                {% if "placeholder" in post.featured_image.url %}
-                                <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="default travel image"> {% else %}
-                                <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="{{ post.title }}"> {% endif %}
-                                <div class="image-flash">
-                                    <p class="author">Author: {{ post.author }}</p>
+                    <a href="{% url 'post_detail' post.slug %}" aria-label="Click to view {{ post.title }}" class="post-link">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="image-container">
+                                    {% if "placeholder" in post.featured_image.url %}
+                                    <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="default travel image"> {% else %}
+                                    <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="image related to {{ post.title }}"> {% endif %}
+                                    <div class="image-flash">
+                                        <p class="author">Author: {{ post.author }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <a href="{% url 'post_detail' post.slug %}" class="post-link">
                                 <h2 class="card-title">{{ post.title }}</h2>
                                 <p class="card-text">{{ post.excerpt }}</p>
-                            </a>
-
-                            <hr />
-                            <p class="card-text text-muted h6">{{ post.created_on}}
-                            </p>
+                                <hr />
+                                <p class="card-text text-muted h6">{{ post.created_on}}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div>
+                    <h3 class="text-center">No posts written yet, add a new post <a href="{% url 'add_post' %}" aria-label="Link to create new post">here</a></h3>
                 </div>
                 {% endfor %}
             </div>
@@ -38,9 +41,9 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
-            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREVIOUS</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Link to previous page">&laquo; PREVIOUS</a></li>
             {% endif %} {% if page_obj.has_next %}
-            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Link to next page"> NEXT &raquo;</a></li>
             {% endif %}
         </ul>
     </nav>

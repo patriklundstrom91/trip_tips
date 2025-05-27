@@ -80,7 +80,7 @@
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
                 </form>
                 {% else %}
-                <p>Log in to leave a comment</p>
+                <p><a href="{% url 'account_login' %}">Log in </a>to leave a comment</p>
                 {% endif %}
             </div>
         </div>
