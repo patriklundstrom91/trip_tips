@@ -18,7 +18,7 @@ class AddPost(generic.CreateView):
     """
     template_name = 'blog/add_post.html'
     model = Post
-
+    form_class = PostForm
     success_url = '/blog/'
 
     def form_valid(self, form):
