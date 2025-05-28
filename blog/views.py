@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.utils.text import slugify
 from django.contrib import messages
@@ -22,7 +23,7 @@ class MyPosts(LoginRequiredMixin, generic.ListView):
     """
     List the post made by the present logged in user
     """
-    template_name = "blog/index.html"
+    template_name = "blog/my_posts.html"
     paginate_by = 6
 
     def get_queryset(self):
@@ -51,6 +52,17 @@ class AddPost(LoginRequiredMixin, generic.CreateView):
         response = super().form_valid(form)
         messages.success(self.request, "Your post has been created, awaits admin approval!")
         return response
+
+
+class DeletePost(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    """
+    View to delete a post.
+    """
+    model = Post
+    success_url = 'my_posts'
+
+    def test_func(self):
+        return self.request.user == self.get_object().author
 
 
 def post_detail(request, slug):
@@ -113,6 +125,7 @@ def comment_edit(request, slug, comment_id):
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
 
+@login_required
 def comment_delete(request, slug, comment_id):
     """
     View to delete a comment.
