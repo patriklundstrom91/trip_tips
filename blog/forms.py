@@ -7,14 +7,21 @@ class PostForm(forms.ModelForm):
     """
     Form to add a post
     """
+
     class Meta:
         model = Post
-        fields = ['title', 'featured_image', 'content', 'excerpt', 'continent',]
-        
+        fields = [
+            "title",
+            "featured_image",
+            "content",
+            "excerpt",
+            "continent",
+        ]
+
         labels = {
-            'title': 'Post title',
-            'featured_image': 'Post main image',
-            'excerpt': 'Post intro text/ Summary',
+            "title": "Post title",
+            "featured_image": "Post main image",
+            "excerpt": "Post intro text/ Summary",
         }
 
 
@@ -22,9 +29,10 @@ class CommentForm(forms.ModelForm):
     """
     Form to add a comment
     """
+
     class Meta:
         model = Comment
-        fields = ('body',)
+        fields = ("body",)
         labels = {
-            'body': 'Comment',
+            "body": "Comment",
         }

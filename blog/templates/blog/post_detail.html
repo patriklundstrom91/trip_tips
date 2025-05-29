@@ -23,7 +23,11 @@
             <div class="card-body">
                 <article class="card-text">
                     <!-- post content shows here-->
-                    {{ post.content | safe }}
+                    {{ post.content | safe }} {% if user.is_authenticated and post.author == user %}
+                    <div class="text-center">
+                        <a href="{% url 'edit_post' post.id %}" class="btn btn-primary w-20">Edit Post</a>
+                        <a href="{% url 'delete_post' post.id %}" class="btn btn-primary w-20">Delete Post</a>
+                    </div> {% endif %}
                 </article>
             </div>
         </div>

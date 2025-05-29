@@ -5,10 +5,12 @@ from .models import Post, Comment
 
 
 class PostAdminForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditor5Widget(
-        attrs={"class": "django_ckeditor_5"},
-        config_name="default"  # or your custom config name
-    ))
+    content = forms.CharField(
+        widget=CKEditor5Widget(
+            attrs={"class": "django_ckeditor_5"},
+            config_name="default",  # or your custom config name
+        )
+    )
 
     class Meta:
         model = Post
@@ -18,10 +20,19 @@ class PostAdminForm(forms.ModelForm):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
-    list_display = ('title', 'slug', 'status', 'created_on',)
-    search_fields = ['title', 'content']
-    list_filter = ('status', 'created_on',)
-    prepopulated_fields = {'slug': ('title',)}
+    list_display = (
+        "title",
+        "slug",
+        "status",
+        "created_on",
+    )
+    search_fields = ["title", "content"]
+    list_filter = (
+        "status",
+        "created_on",
+    )
+    prepopulated_fields = {"slug": ("title",)}
+
 
 # Register your models here.
 

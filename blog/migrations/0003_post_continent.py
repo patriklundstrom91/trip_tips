@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_alter_post_content_alter_post_title'),
+        ("blog", "0002_alter_post_content_alter_post_title"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='post',
-            name='continent',
-            field=models.IntegerField(choices=[(0, 'South/Central America'), (1, 'North America'), (2, 'Europe'), (3, 'Africa'), (4, 'Asia'), (5, 'Austraila')], default=2),
+            model_name="post",
+            name="continent",
+            field=models.IntegerField(
+                choices=[
+                    (0, "South/Central America"),
+                    (1, "North America"),
+                    (2, "Europe"),
+                    (3, "Africa"),
+                    (4, "Asia"),
+                    (5, "Austraila"),
+                ],
+                default=2,
+            ),
         ),
     ]

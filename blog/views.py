@@ -9,11 +9,13 @@ from django.http import HttpResponseRedirect
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
+
 # Create your views here.
 class PostList(generic.ListView):
     """
     List all published posts
     """
+
     queryset = Post.objects.filter(status=1)
     template_name = "blog/index.html"
     paginate_by = 6
@@ -23,6 +25,7 @@ class MyPosts(LoginRequiredMixin, generic.ListView):
     """
     List the post made by the present logged in user
     """
+
     template_name = "blog/my_posts.html"
     paginate_by = 6
 
@@ -34,10 +37,11 @@ class AddPost(LoginRequiredMixin, generic.CreateView):
     """
     Add blog post
     """
-    template_name = 'blog/add_post.html'
+
+    template_name = "blog/add_post.html"
     model = Post
     form_class = PostForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
         """Checks that slug is unique or add suffix"""
@@ -50,16 +54,32 @@ class AddPost(LoginRequiredMixin, generic.CreateView):
         form.instance.slug = slug
         form.instance.author = self.request.user
         response = super().form_valid(form)
-        messages.success(self.request, "Your post has been created, awaits admin approval!")
+        messages.success(
+            self.request, "Your post has been created, awaits admin approval!"
+        )
         return response
+
+
+class EditPost(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    """
+    View to edit a post.
+    """
+    template_name = "blog/edit_post.html"
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy("my_posts")
+
+    def test_func(self):
+        return self.request.user == self.get_object().author
 
 
 class DeletePost(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     """
     View to delete a post.
     """
+
     model = Post
-    success_url = 'my_posts'
+    success_url = reverse_lazy("my_posts")
 
     def test_func(self):
         return self.request.user == self.get_object().author
@@ -83,10 +103,9 @@ def post_detail(request, slug):
             comment.post = post
             comment.save()
             messages.add_message(
-                request, messages.SUCCESS,
-                'Comment submitted, awaits admin approval'
-                )
-            
+                request, messages.SUCCESS, "Comment submitted, awaits admin approval"
+            )
+
     comment_form = CommentForm()
 
     return render(
@@ -116,13 +135,13 @@ def comment_edit(request, slug, comment_id):
             comment.post = post
             comment.approved = False
             comment.save()
-            messages.add_message(request, messages.SUCCESS, 
-                                 'Comment Updated, awaits admin approval')
+            messages.add_message(
+                request, messages.SUCCESS, "Comment Updated, awaits admin approval"
+            )
         else:
-            messages.add_message(request, messages.ERROR, 
-                                 'Error updating the comment!')
+            messages.add_message(request, messages.ERROR, "Error updating the comment!")
 
-    return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+    return HttpResponseRedirect(reverse("post_detail", args=[slug]))
 
 
 @login_required
@@ -136,9 +155,12 @@ def comment_delete(request, slug, comment_id):
 
     if comment.author == request.user:
         comment.delete()
-        messages.add_message(request, messages.SUCCESS, 'Comment deleted!')
+        messages.add_message(request, messages.SUCCESS, "Comment deleted!")
     else:
-        messages.add_message(request, messages.ERROR, 'Deletion failed, you can only delete your own comments!')
+        messages.add_message(
+            request,
+            messages.ERROR,
+            "Deletion failed, you can only delete your own comments!",
+        )
 
-    return HttpResponseRedirect(reverse('post_detail', args=[slug]))
-
+    return HttpResponseRedirect(reverse("post_detail", args=[slug]))
