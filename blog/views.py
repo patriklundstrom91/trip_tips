@@ -71,6 +71,10 @@ class EditPost(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
 
     def test_func(self):
         return self.request.user == self.get_object().author
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Post edited!")
+        return super().form_valid(form)
 
 
 class DeletePost(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
@@ -83,6 +87,10 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
 
     def test_func(self):
         return self.request.user == self.get_object().author
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Post deleted!")
+        return super().form_valid(form)
 
 
 def post_detail(request, slug):

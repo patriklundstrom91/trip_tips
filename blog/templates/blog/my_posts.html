@@ -9,6 +9,7 @@
             <div class="row">
                 {% for post in post_list %}
                 <div class="col-sm-6 col-lg-4">
+                    {% if post.status == 1 and post.author == user %}
                     <a href="{% url 'post_detail' post.slug %}" aria-label="Click to view {{ post.title }}" class="post-link">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -23,11 +24,38 @@
                                 <h2 class="card-title">{{ post.title }}</h2>
                                 <p class="card-text">{{ post.excerpt }}</p>
                                 <hr />
-                                <p class="card-text text-muted h6">{{ post.created_on}}
+                                <p class="card-text text-muted h6">
+                                    {{ post.created_on}}
+                                    <a href="{% url 'edit_post' post.id %}" class="btn btn-primary w-20">Edit Post</a>
+                                    <a href="{% url 'delete_post' post.id %}" class="btn btn-primary w-20">Delete Post</a>
                                 </p>
                             </div>
                         </div>
-                    </a>
+                    </a>{% elif post.status == 0 %}
+                    <div class="card mb-4">
+                        <div class="card-body faded-text">
+                            <div class="image-container">
+                                {% if "placeholder" in post.featured_image.url %}
+                                <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="default travel image"> {% else %}
+                                <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="image related to {{ post.title }}"> {% endif %}
+                                <div class="image-flash">
+                                    <p class="author">Author: {{ post.author | title }}</p>
+                                </div>
+                            </div>
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            <p class="card-text">{{ post.excerpt }}</p>
+                            <hr />
+                            <p class="card-text text-muted h6">
+                                {{ post.created_on}}
+                                <a href="{% url 'edit_post' post.id %}" class="btn btn-primary w-20">Edit Post</a>
+                                <a href="{% url 'delete_post' post.id %}" class="btn btn-primary w-20">Delete Post</a>
+                            </p>
+                            <p class="approval-text">
+                                This post is awaiting approval
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
                 {% empty %}
                 <div>
