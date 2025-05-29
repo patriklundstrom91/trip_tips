@@ -73,8 +73,20 @@ class EditPost(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
         return self.request.user == self.get_object().author
     
     def form_valid(self, form):
-        messages.success(self.request, "Post edited!")
-        return super().form_valid(form)
+        """Checks that slug is unique or add suffix, sets status to 0 (unpublished)"""
+        base_slug = slugify(form.instance.title)
+        slug = base_slug
+        counter = 1
+        while Post.objects.filter(slug=slug).exists():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+        form.instance.slug = slug
+        form.instance.status = 0
+        response = super().form_valid(form)
+        messages.success(
+            self.request, "Your post has been updated, awaits admin approval!"
+        )
+        return response
 
 
 class DeletePost(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
