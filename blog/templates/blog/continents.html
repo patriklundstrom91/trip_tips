@@ -1,52 +1,95 @@
-{% extends "base.html" %} {% load static %} {% block content %}
-
-<!-- index content start here -->
-<div class="container-fluid">
+{% extends 'base.html' %}
+{% load static %}
+{% url 'continents' 'south-central-america' as south_america_url %}
+{% url 'continents' 'north-america' as north_america_url %}
+{% url 'continents' 'europe' as europe_url %}
+{% url 'continents' 'africa' as africa_url %}
+{% url 'continents' 'asia' as asia_url %}
+{% url 'continents' 'australia' as australia_url %}
+{% block content %}
+  <!-- index content start here -->
+  <!-- Hero image -->
+  <div class="hero">
+    <div class="hero-image-wrap">
+      {% if 'south-central-america' in request.path %}<img src="{% static 'images/hero-rio.jpg' %}" alt="Hero image Rio" class="hero-image" />
+    </div>
+    <div class="hero-text">
+      <h2>South / Central America</h2>{% elif 'north-america' in request.path %}<img src="{% static 'images/hero-america.jpg' %}" alt="Hero image America" class="hero-image" />
+    </div>
+    <div class="hero-text">
+      <h2>North America</h2>{% elif 'europe' in request.path %}<img src="{% static 'images/hero-europe.jpg' %}" alt="Hero image Europe" class="hero-image" />
+    </div>
+    <div class="hero-text">
+      <h2>Europe</h2>{% elif 'africa' in request.path %}<img src="{% static 'images/hero-africa.jpg' %}" alt="Hero image Africa" class="hero-image" />
+    </div>
+    <div class="hero-text">
+      <h2>Africa</h2>{% elif 'asia' in request.path %}<img src="{% static 'images/hero-asia.jpg' %}" alt="Hero image Asia" class="hero-image" />
+    </div>
+    <div class="hero-text">
+      <h2>Asia</h2>{% elif 'australia' in request.path %}<img src="{% static 'images/hero-australia.jpg' %}" alt="Hero image Australia" class="hero-image" />
+    </div>
+    <div class="hero-text">
+      <h2>Australia</h2>{% endif %}
+    </div>
+  </div>
+  <!-- Continent filtered posts -->
+  <div class="container-fluid">
+    <div class="filter-wrap text-center">
+      <a class="{% if 'south-central-america' in request.path %}active-continent{% else %}filter{% endif %}" href="{% url 'continents' 'south-central-america' %}">South/Central America |</a>
+      <a class="{% if 'north-america' in request.path %}active-continent{% else %}filter{% endif %}" href="{% url 'continents' 'north-america' %}">North America |</a>
+      <a class="{% if 'europe' in request.path %}active-continent{% else %}filter{% endif %}" href="{% url 'continents' 'europe' %}">Europe |</a>
+      <a class="{% if 'africa' in request.path %}active-continent{% else %}filter{% endif %}" href="{% url 'continents' 'africa' %}">Africa |</a>
+      <a class="{% if 'asia' in request.path %}active-continent{% else %}filter{% endif %}" href="{% url 'continents' 'asia' %}">Asia |</a>
+      <a class="{% if 'australia' in request.path %}active-continent{% else %}filter{% endif %}" href="{% url 'continents' 'australia' %}">Australia</a>
+    </div>
     <div class="row">
-
-        <!-- Blog Entries Column -->
-        <div class="col-12 mt-3 left">
-            <div class="row">
-                {% for post in post_list %}
-                <div class="col-sm-6 col-lg-4">
-                    <a href="{% url 'post_detail' post.slug %}" aria-label="Click to view {{ post.title }}" class="post-link">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="image-container">
-                                    {% if "placeholder" in post.featured_image.url %}
-                                    <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="default travel image"> {% else %}
-                                    <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="image related to {{ post.title }}"> {% endif %}
-                                    <div class="image-flash">
-                                        <p class="author">Author: {{ post.author | title }}</p>
-                                    </div>
-                                </div>
-                                <h2 class="card-title">{{ post.title }}</h2>
-                                <p class="card-text">{{ post.excerpt }}</p>
-                                <hr />
-                                <p class="card-text text-muted h6">{{ post.created_on}}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
+      <div class="col-12 mt-3 left">
+        <div class="row">
+          {% for post in post_list %}
+            <div class="col-sm-6 col-lg-4">
+              <a href="{% url 'post_detail' post.slug %}" aria-label="Click to view {{ post.title }}" class="post-link">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div class="image-container">
+                      {% if 'placeholder' in post.featured_image.url %}
+                        <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="default travel image" />
+                      {% else %}
+                        <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="image related to {{ post.title }}" />
+                      {% endif %}
+                      <div class="image-flash">
+                        <p class="author">Author: {{ post.author|title }}</p>
+                      </div>
+                    </div>
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text">{{ post.excerpt }}</p>
+                    <hr />
+                    <p class="card-text text-muted h6">{{ post.created_on }}</p>
+                  </div>
                 </div>
-                {% empty %}
-                <div>
-                    <h3 class="text-center">No posts written yet, add a new post <a href="{% url 'add_post' %}" aria-label="Link to create new post">here</a></h3>
-                </div>
-                {% endfor %}
+              </a>
             </div>
+          {% empty %}
+            <div>
+              <h3 class="text-center">No posts written yet, add a new post <a href="{% url 'add_post' %}" aria-label="Link to create new post">here</a></h3>
+            </div>
+          {% endfor %}
         </div>
+      </div>
     </div>
     {% if is_paginated %}
-    <nav aria-label="Page navigation">
+      <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Link to previous page">&laquo; Previous</a></li>
-            {% endif %} {% if page_obj.has_next %}
-            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Link to next page"> Next &raquo;</a></li>
-            {% endif %}
+          {% if page_obj.has_previous %}
+            <li>
+              <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Link to previous page">&laquo; Previous</a>
+            </li>
+          {% endif %} {% if page_obj.has_next %}
+            <li>
+              <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Link to next page">Next &raquo;</a>
+            </li>
+          {% endif %}
         </ul>
-    </nav>
+      </nav>
     {% endif %}
-</div>
+  </div>
 {% endblock %}

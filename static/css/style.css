@@ -52,6 +52,20 @@ h5 {
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
 }
 
+.filter-wrap {
+    margin-top: 16px;
+}
+
+.filter {
+    text-decoration: none;
+    color: black;
+}
+
+.active-continent {
+    text-decoration: underline;
+    color: black;
+}
+
 .scale {
     width: 100%;
     height: auto;
