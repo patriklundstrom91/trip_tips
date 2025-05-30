@@ -4,9 +4,13 @@ from . import views
 
 urlpatterns = [
     path("", views.PostList.as_view(), name="home"),
-    path("<slug:slug>/", views.post_detail, name="post_detail"),
     path("add_post", views.AddPost.as_view(), name="add_post"),
     path("my_posts", views.MyPosts.as_view(), name="my_posts"),
+    path("delete/<slug:pk>/", views.DeletePost.as_view(), name="delete_post"),
+    path("edit/<slug:pk>/", views.EditPost.as_view(), name="edit_post"),
+    path("favourite/<int:post_id>/", views.toggle_favourite, name="toggle_favourite"),
+    path("my_favourites/", views.my_favourites, name="my_favourites"),
+    path("<slug:slug>/", views.post_detail, name="post_detail"),
     path(
         "<slug:slug>/edit_comment/<int:comment_id>",
         views.comment_edit,
@@ -17,6 +21,4 @@ urlpatterns = [
         views.comment_delete,
         name="comment_delete",
     ),
-    path("delete/<slug:pk>/", views.DeletePost.as_view(), name="delete_post"),
-    path("edit/<slug:pk>/", views.EditPost.as_view(), name="edit_post"),
 ]

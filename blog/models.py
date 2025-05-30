@@ -57,3 +57,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.body} by {self.author}"
+
+
+class Favourite(models.Model):
+    """
+    Stores a single favourite post related to a User and Post
+    """
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="favourites")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favourited_by")
+
+    class Meta:
+        unique_together = ("user", "post")
+
+    def __str__(self):
+        return f"{self.user} favourited {self.post}"
+    

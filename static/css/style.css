@@ -16,7 +16,8 @@ body {
     font-family: var(--primary-font);
 }
 
-h2 {
+h2,
+h5 {
     font-family: var(--headline-font);
 }
 
@@ -50,6 +51,14 @@ h2 {
 
 .approval-text {
     color: rgba(249, 105, 14, 0.6);
+}
+
+.favourite {
+    display: inline;
+}
+
+.post-link {
+    text-decoration: none;
 }
 
 #commentForm {

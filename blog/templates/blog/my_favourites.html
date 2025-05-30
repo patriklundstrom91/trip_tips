@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<!-- content start here -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                <!-- Loop through favourites -->
+                {% for fav in favourites %}
+                <div class="card mb-3" style="max-width: 540px;">
+                    {% if fav.post.status == 0 %}
+                    <!--If favourite post has been edited and is not longer published show faded without link to open-->
+                    <div class="row g-0 faded-text">
+                        <div class="col-md-4">
+                            {% if "placeholder" in fav.post.featured_image.url %}
+                            <img class="img-fluid rounded-start" src="{% static 'images/default.jpg' %}" alt="default travel image"> {% else %}
+                            <img class="img-fluid rounded-start" src=" {{ fav.post.featured_image.url }}" alt="image related to {{ fav.post.title }}"> {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ fav.post.title }}</h5>
+                                <p class="card-text">{{ fav.post.excerpt }}</p>
+                                <p class="card-text"><small class="text-body-secondary">By: {{ fav.post.author | title }} {{ fav.post.created_on}}</small></p>
+                                <p class="approval-text">Post has been edited, awaiting approval</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <!--Show clickable favourite post-->
+                    <a href="{% url 'post_detail' slug=fav.post.slug %}" aria-label="Link to favoutite post {{ fav.post.title }}" class="post-link">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                {% if "placeholder" in fav.post.featured_image.url %}
+                                <img class="img-fluid rounded-start" src="{% static 'images/default.jpg' %}" alt="default travel image"> {% else %}
+                                <img class="img-fluid rounded-start" src=" {{ fav.post.featured_image.url }}" alt="image related to {{ fav.post.title }}"> {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ fav.post.title }}</h5>
+                                    <p class="card-text">{{ fav.post.excerpt }}</p>
+                                    <p class="card-text"><small class="text-body-secondary">By: {{ fav.post.author | title }} {{ fav.post.created_on}}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endif %} {% empty %}
+                <!--If no favourite post text-->
+                <div class="text-center">
+                    <h3>No favourites yet, add a favourite by clicking the
+                        <i class="fa-regular fa-heart"></i> in a blog post.</h3>
+                    <a href="{% url 'home' %}" aria-label="Link to home">Back to home</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

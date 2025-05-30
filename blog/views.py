@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from .models import Post, Comment
+from .models import Post, Comment, Favourite
 from .forms import CommentForm, PostForm
 
 
@@ -114,6 +114,10 @@ def post_detail(request, slug):
     post = get_object_or_404(queryset, slug=slug)
     comments = post.comments.all().order_by("-created_on")
     comment_count = post.comments.filter(approved=True).count()
+    is_favourited = False
+
+    if request.user.is_authenticated:
+        is_favourited = Favourite.objects.filter(user=request.user, post=post).exists()
 
     if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
@@ -133,6 +137,7 @@ def post_detail(request, slug):
         "blog/post_detail.html",
         {
             "post": post,
+            "is_favourited": is_favourited,
             "comments": comments,
             "comment_count": comment_count,
             "comment_form": comment_form,
@@ -140,6 +145,7 @@ def post_detail(request, slug):
     )
 
 
+@login_required
 def comment_edit(request, slug, comment_id):
     """
     View to edit a comment.
@@ -184,3 +190,18 @@ def comment_delete(request, slug, comment_id):
         )
 
     return HttpResponseRedirect(reverse("post_detail", args=[slug]))
+
+
+@login_required
+def toggle_favourite(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    favourite, created = Favourite.objects.get_or_create(user=request.user, post = post)
+    if not created:
+        favourite.delete()
+    return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
+
+
+@login_required
+def my_favourites(request):
+    favourites = Favourite.objects.filter(user=request.user).select_related("post")
+    return render(request, "blog/my_favourites.html", {"favourites": favourites})
