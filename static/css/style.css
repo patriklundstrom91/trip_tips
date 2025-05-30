@@ -102,6 +102,40 @@ h5 {
     display: inline;
 }
 
+.image-container {
+    width: 100%;
+    padding-top: 56.25%;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.image-flash {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1em 1em;
+    z-index: 2;
+}
+
+.sign-in-out {}
+
+.btn-signup {
+    background-color: beige;
+    text-align: center;
+}
+
 .post-link {
     text-decoration: none;
 }
