@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.PostList.as_view(), name="home"),
     path("add_post", views.AddPost.as_view(), name="add_post"),
     path("my_posts", views.MyPosts.as_view(), name="my_posts"),
+    path("continents/<slug:continent_slug>/", views.Continents.as_view(), name="continents"),
     path("delete/<slug:pk>/", views.DeletePost.as_view(), name="delete_post"),
     path("edit/<slug:pk>/", views.EditPost.as_view(), name="edit_post"),
     path("favourite/<int:post_id>/", views.toggle_favourite, name="toggle_favourite"),

@@ -15,7 +15,6 @@ class PostList(generic.ListView):
     """
     List all published posts
     """
-
     queryset = Post.objects.filter(status=1)
     template_name = "blog/index.html"
     paginate_by = 6
@@ -25,12 +24,33 @@ class MyPosts(LoginRequiredMixin, generic.ListView):
     """
     List the post made by the present logged in user
     """
-
     template_name = "blog/my_posts.html"
     paginate_by = 6
 
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
+
+
+class Continents(generic.ListView):
+    """
+    List the posts from a specific continent.
+    """
+    template_name = "blog/index.html"
+    paginate_by = 6
+
+    CONTINENT_SLUGS = {
+        "south-central-america": 0,
+        "north-america": 1,
+        "europe": 2,
+        "africa": 3,
+        "asia": 4,
+        "australia": 5,
+    }
+
+    def get_queryset(self):
+        continent_slug = self.kwargs.get("continent_slug")
+        continent_id = self.CONTINENT_SLUGS.get(continent_slug)
+        return Post.objects.filter(continent=continent_id)
 
 
 class AddPost(LoginRequiredMixin, generic.CreateView):
