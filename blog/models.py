@@ -11,7 +11,7 @@ CONTINENT = (
     (2, "Europe"),
     (3, "Africa"),
     (4, "Asia"),
-    (5, "Austraila"),
+    (5, "Australia"),
 )
 # Create your models here.
 

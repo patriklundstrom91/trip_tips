@@ -35,7 +35,7 @@ class Continents(generic.ListView):
     """
     List the posts from a specific continent.
     """
-    template_name = "blog/index.html"
+    template_name = "blog/continents.html"
     paginate_by = 6
 
     CONTINENT_SLUGS = {

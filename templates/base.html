@@ -84,6 +84,12 @@
                     page
                   {% endif %}" href="{% url 'account_logout' %}">Logout</a>
               </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item nav-link">
+                Logged in as {{ user }}
+              </li>
+          </ul>
             {% else %}
               <li class="nav-item">
                 <a class="nav-link {% if request.path == signup_url %}
@@ -97,8 +103,13 @@
                     page
                   {% endif %}" href="{% url 'account_login' %}">Login</a>
               </li>
-            {% endif %}
           </ul>
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item nav-link">
+                Not logged in
+              </li>
+          </ul>
+        {% endif %}
         </div>
       </div>
     </nav>
@@ -118,11 +129,6 @@
     </div>
     <!-- content from other html files to show post_list or post_detail etc -->
     <main class="flex-shrink-0">
-      {% if user.is_authenticated %}
-        <p class="text-end m-3">Logged in as {{ user }}</p>
-      {% else %}
-        <p class="text-end m-3">Not logged in</p>
-      {% endif %}
       <div id="content">
         {% block content %}
 

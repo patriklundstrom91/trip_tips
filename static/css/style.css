@@ -21,6 +21,37 @@ h5 {
     font-family: var(--headline-font);
 }
 
+.hero {
+    position: relative;
+    width: 100%;
+    height: 30vh;
+    overflow: hidden;
+}
+
+.hero-image-wrap {
+    position: relative;
+    height: 30vh;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.hero-text {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+}
+
 .scale {
     width: 100%;
     height: auto;

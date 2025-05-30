@@ -1,19 +1,10 @@
 {% extends "base.html" %} {% load static %} {% block content %}
 
-<!-- index content -->
-<!-- Hero image -->
-<div class="hero">
-    <div class="hero-image-wrap">
-        <img src="{% static 'images/hero-rio.jpg' %}" alt="Hero image Rio" class="hero-image">
-    </div>
-    <div class="hero-text">
-        <h2>Welcome to Trip Tips</h2>
-    </div>
-</div>
+<!-- index content start here -->
 <div class="container-fluid">
     <div class="row">
 
-        <!-- Blog post cards -->
+        <!-- Blog Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
                 {% for post in post_list %}
