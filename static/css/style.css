@@ -136,6 +136,13 @@ h5 {
     text-align: center;
 }
 
+.btn-fav {
+    text-decoration: none;
+    border: none;
+    background: none;
+    font-size: 25px;
+}
+
 .post-link {
     text-decoration: none;
 }
