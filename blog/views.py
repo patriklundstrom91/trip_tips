@@ -50,7 +50,7 @@ class Continents(generic.ListView):
     def get_queryset(self):
         continent_slug = self.kwargs.get("continent_slug")
         continent_id = self.CONTINENT_SLUGS.get(continent_slug)
-        return Post.objects.filter(continent=continent_id)
+        return Post.objects.filter(continent=continent_id, status=1)
 
 
 class AddPost(LoginRequiredMixin, generic.CreateView):
