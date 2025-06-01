@@ -222,6 +222,15 @@ def toggle_favourite(request, post_id):
 
 
 @login_required
+def remove_favourite(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    favourite, created = Favourite.objects.get_or_create(user=request.user, post = post)
+    if not created:
+        favourite.delete()
+    return HttpResponseRedirect(reverse("my_favourites"))
+
+
+@login_required
 def my_favourites(request):
     favourites = Favourite.objects.filter(user=request.user).select_related("post")
     return render(request, "blog/my_favourites.html", {"favourites": favourites})

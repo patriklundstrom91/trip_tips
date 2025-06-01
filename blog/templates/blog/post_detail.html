@@ -71,7 +71,7 @@
                  d-none
               {% endif %}">
               <p class="font-weight-bold">
-                {{ comment.author }}
+                {{ comment.author | title}}
                 <span class="font-weight-normal">{{ comment.created_on }}</span> wrote:
               </p>
               <div id="comment{{ comment.id }}">{{ comment.body|linebreaks }}</div>

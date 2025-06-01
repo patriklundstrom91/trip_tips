@@ -7,6 +7,14 @@
 :root {
     --primary-font: "Lato", sans-serif;
     --headline-font: "Lobster", sans-serif;
+    --bg-nav: #B0D9D9;
+    /*#B0D9D9*/
+    --bg-page: #FFFAF0;
+    /*#FFFFEB*/
+    --bg-black: #000000;
+    /**/
+    --bg-color: #027373;
+    --bg-rustic: #C17C74;
 }
 
 
@@ -14,10 +22,19 @@
 
 body {
     font-family: var(--primary-font);
+    background-color: var(--bg-page);
 }
 
 h2,
 h5 {
+    font-family: var(--headline-font);
+}
+
+.logo {
+    height: 25px;
+}
+
+.nav-headline {
     font-family: var(--headline-font);
 }
 
@@ -145,6 +162,10 @@ h5 {
 
 .post-link {
     text-decoration: none;
+}
+
+#navbar {
+    background-color: var(--bg-nav);
 }
 
 #commentForm {
