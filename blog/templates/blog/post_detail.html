@@ -2,43 +2,37 @@
   {{ post.title }}
 {% endblock %} {% block content %}
   {% load static %} {% load crispy_forms_tags %}
-
-  <div class="bloghead">
-    <div class="container">
-      <div class="row g-0">
-        <div class="col-md-6 bloghead-text">
-          <!-- info about the post -->
-          <h2>{{ post.title }}</h2>
-          <p>Continent: {{ post.get_continent_display }}</p>
-          <p>By {{ post.author }} | {{ post.created_on }}</p>
-        </div>
-        <div class="col-md-6 bloghead-image">
-          {% if 'placeholder' in post.featured_image.url %}
-            <img class="scale" src="{% static 'images/default.jpg' %}" alt="placeholder image" />
-          {% else %}
-            <img class="scale" src=" {{ post.featured_image.url }}" alt="{{ post.title }}" />
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <div class="container">
     <div class="row">
+    <div class="image-container">
+    {% if 'placeholder' in post.featured_image.url %}
+      <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="default travel image" />
+    {% else %}
+      <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="image related to {{ post.title }}" />
+    {% endif %}
+    <div class="image-flash">
+        <h2>{{ post.title }}</h2>
+        <p>Continent: {{ post.get_continent_display }}</p>
+        <p>By {{ post.author }} | {{ post.created_on }}</p>
+    </div>
+  </div>
+    
       <div class="col card mb-4 mt-3 left top">
         <div class="card-body">
           <article class="card-text">
             <!-- post content shows here -->
             {{ post.content|safe }} {% if user.is_authenticated and post.author == user %}
-              <div class="text-center">
-                <a href="{% url 'edit_post' post.id %}" class="btn btn-primary w-20">Edit Post</a>
-                <a href="{% url 'delete_post' post.id %}" class="btn btn-primary w-20">Delete Post</a>
+              <div class="">
+                <a href="{% url 'edit_post' post.id %}" class="btn btn-signup w-20">Edit Post</a>
+                <a href="{% url 'delete_post' post.id %}" class="btn btn-signup w-20">Delete Post</a>
               </div>
             {% endif %}
           </article>
         </div>
       </div>
     </div>
-    <!-- Display add favourites section and number of comments  -->
+    <!-- Display add favourites section and number of comments -->
     <div class="row">
       <div>
         <form action="{% url 'toggle_favourite' post.id %}" method="post" class="favorite">
@@ -65,20 +59,19 @@
           {% for comment in comments %}
             <div class="p-2 comments
                 {% if not comment.approved and comment.author == user %}
-                
                 faded-text
               {% elif not comment.approved %}
                  d-none
               {% endif %}">
               <p class="font-weight-bold">
-                {{ comment.author | title}}
+                {{ comment.author|title }}
                 <span class="font-weight-normal">{{ comment.created_on }}</span> wrote:
               </p>
               <div id="comment{{ comment.id }}">{{ comment.body|linebreaks }}</div>
               {% if not comment.approved and comment.author == user %}
                 <p class="approval-text">This comment is awaiting approval</p>
               {% endif %} {% if user.is_authenticated and comment.author == user %}
-                <button class="btn btn-edit" data-comment_id="{{ comment.id }}">Edit</button>
+                <button class="btn btn-signup" data-comment_id="{{ comment.id }}">Edit</button>
                 <button class="btn btn-delete" data-comment_id="{{ comment.id }}">Delete</button>
               {% endif %}
             </div>
@@ -115,7 +108,7 @@
         <div class="modal-body">Are you sure you want to delete your comment? This action cannot be undone.</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+          <a id="deleteConfirm" href="#" class="btn btn-delete">Delete</a>
         </div>
       </div>
     </div>
