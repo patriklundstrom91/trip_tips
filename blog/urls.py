@@ -12,7 +12,6 @@ urlpatterns = [
     path("favourite/<int:post_id>/toggle", views.toggle_favourite, name="toggle_favourite"),
     path("favourite/<int:post_id>/remove", views.remove_favourite, name="remove_favourite"),
     path("my_favourites/", views.my_favourites, name="my_favourites"),
-    path("<slug:slug>/", views.post_detail, name="post_detail"),
     path(
         "<slug:slug>/edit_comment/<int:comment_id>",
         views.comment_edit,
@@ -23,4 +22,5 @@ urlpatterns = [
         views.comment_delete,
         name="comment_delete",
     ),
+    path("<slug:slug>/", views.post_detail, name="post_detail"),
 ]

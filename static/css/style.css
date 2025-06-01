@@ -149,6 +149,22 @@ h5 {
     background-color: #FF6961;
 }
 
+.btn-comment-edit {
+    background-color: var(--bg-nav);
+}
+
+.btn-comment-edit:hover {
+    background-color: #8ec8c8;
+}
+
+.btn-comment-delete {
+    background-color: #FFA5A0;
+}
+
+.btn-comment-delete:hover {
+    background-color: #FF6961;
+}
+
 .btn-fav {
     text-decoration: none;
     border: none;
