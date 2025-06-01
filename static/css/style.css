@@ -69,6 +69,10 @@ h5 {
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
 }
 
+.hero-text p {
+    margin-bottom: 0;
+}
+
 .filter-wrap {
     margin-top: 16px;
 }
@@ -183,6 +187,14 @@ h5 {
 
 .footer {
     padding-top: 10px;
+}
+
+.social-icon {
+    color: var(--bg-nav);
+}
+
+.social-icon:hover {
+    color: #8ec8c8;
 }
 
 #navbar {
