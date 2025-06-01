@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import FileExtensionValidator
 from cloudinary.models import CloudinaryField
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -26,7 +27,7 @@ class Post(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
-    featured_image = CloudinaryField("image", default="placeholder")
+    featured_image = CloudinaryField("image", validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])], default="placeholder")
     content = CKEditor5Field("Post content", config_name="extends")
     excerpt = models.TextField(blank=True)
     continent = models.IntegerField(choices=CONTINENT, default=2)
