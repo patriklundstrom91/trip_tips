@@ -157,11 +157,16 @@ h5 {
     text-decoration: none;
     border: none;
     background: none;
+    color: #000000;
     font-size: 25px;
 }
 
 .post-link {
     text-decoration: none;
+}
+
+.footer {
+    padding-top: 10px;
 }
 
 #navbar {
