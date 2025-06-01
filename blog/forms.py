@@ -20,7 +20,7 @@ class PostForm(forms.ModelForm):
 
         labels = {
             "title": "Post title",
-            "featured_image": "Post main image",
+            "featured_image": "Post main image (jpg, jpeg, png, gif)",
             "excerpt": "Post intro text/ Summary",
         }
 

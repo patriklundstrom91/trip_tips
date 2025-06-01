@@ -17,6 +17,16 @@ CONTINENT = (
 # Create your models here.
 
 
+def image_extension_validator(value):
+    """
+    Only validate if value is an uploaded file 
+    to avoid error if no new file uploaded.
+    """
+    if hasattr(value, 'name'):
+        validator = FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])
+        validator(value)
+
+
 class Post(models.Model):
     """
     Store a single blog post entry related to a User
@@ -27,7 +37,7 @@ class Post(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
-    featured_image = CloudinaryField("image", validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])], default="placeholder")
+    featured_image = CloudinaryField("image", validators=[image_extension_validator], default="placeholder")
     content = CKEditor5Field("Post content", config_name="extends")
     excerpt = models.TextField(blank=True)
     continent = models.IntegerField(choices=CONTINENT, default=2)
