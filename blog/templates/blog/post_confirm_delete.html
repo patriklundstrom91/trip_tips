@@ -5,7 +5,7 @@
         <form method="post" class="text-center">
             {% csrf_token %}
             <p>Are you sure you want to delete "{{object.title}}"?</p>
-            <a href="{% url 'post_detail' object.slug %}" class="btn btn-signup">Back</a>
+            <button id="btnBack" type="button" class="btn btn-signup">Back</button>
             <input type="submit" value="Confirm" class="btn btn-delete">
         </form>
     </div>

@@ -25,7 +25,7 @@
             {{ post.content|safe }} {% if user.is_authenticated and post.author == user %}
               <div class="">
                 <a href="{% url 'edit_post' post.id %}" class="btn btn-signup w-20">Edit Post</a>
-                <a href="{% url 'delete_post' post.id %}" class="btn btn-signup w-20">Delete Post</a>
+                <a href="{% url 'delete_post' post.id %}" class="btn btn-red w-20">Delete Post</a>
               </div>
             {% endif %}
           </article>

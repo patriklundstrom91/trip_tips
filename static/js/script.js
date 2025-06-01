@@ -1,3 +1,15 @@
+const backButton = document.getElementById("btnBack");
+/**
+ * js for back button in confirm delete to go back one step 
+ * to previous page since it can be trigger from different pages.
+ */
+if (backButton) {
+    backButton.addEventListener("click", () => {
+        history.back();
+    });
+}
+
+
 const editButtons = document.getElementsByClassName("btn-comment-edit");
 const commentText = document.getElementById("id_body");
 const commentForm = document.getElementById("commentForm");
@@ -6,6 +18,8 @@ const submitButton = document.getElementById("submitButton");
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const deleteButtons = document.getElementsByClassName("btn-comment-delete");
 const deleteConfirm = document.getElementById("deleteConfirm");
+
+
 
 /**
  * Adds edit functionality to edit button.

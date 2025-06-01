@@ -145,11 +145,13 @@ h5 {
     background-color: #8ec8c8;
 }
 
-.btn-delete {
+.btn-delete,
+.btn-red {
     background-color: #FFA5A0;
 }
 
-.btn-delete:hover {
+.btn-delete:hover,
+.btn-red:hover {
     background-color: #FF6961;
 }
 
