@@ -38,6 +38,9 @@ h5 {
     font-family: var(--headline-font);
 }
 
+
+/* Hero section */
+
 .hero {
     position: relative;
     width: 100%;
@@ -73,6 +76,9 @@ h5 {
     margin-bottom: 0;
 }
 
+
+/* Filters */
+
 .filter-wrap {
     margin-top: 16px;
 }
@@ -92,6 +98,9 @@ h5 {
     height: auto;
 }
 
+
+/* Unpublished post */
+
 .faded-text {
     color: rgba(0, 0, 0, 0.5);
 }
@@ -104,6 +113,9 @@ h5 {
 .favourite {
     display: inline;
 }
+
+
+/* Card styling */
 
 .image-container {
     width: 100%;
@@ -136,6 +148,9 @@ h5 {
     text-align: center;
     margin-bottom: 0;
 }
+
+
+/* styling of buttons */
 
 .btn-signup {
     background-color: var(--bg-nav);
@@ -187,6 +202,9 @@ h5 {
     text-decoration: none;
     color: black;
 }
+
+
+/* Footer */
 
 .footer {
     padding-top: 10px;

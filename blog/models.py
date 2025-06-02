@@ -19,7 +19,7 @@ CONTINENT = (
 
 def image_extension_validator(value):
     """
-    Only validate if value is an uploaded file 
+    Only validate if value is an uploaded file
     to avoid error if no new file uploaded.
     """
     if hasattr(value, 'name'):
@@ -88,4 +88,3 @@ class Favourite(models.Model):
 
     def __str__(self):
         return f"{self.user} favourited {self.post}"
-    

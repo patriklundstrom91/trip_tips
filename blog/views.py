@@ -91,9 +91,12 @@ class EditPost(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
 
     def test_func(self):
         return self.request.user == self.get_object().author
-    
+
     def form_valid(self, form):
-        """Checks that slug is unique or add suffix, sets status to 0 (unpublished)"""
+        """
+        Checks that slug is unique or add suffix,
+        sets status to 0 (unpublished)
+        """
         base_slug = slugify(form.instance.title)
         slug = base_slug
         counter = 1
@@ -119,7 +122,7 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
 
     def test_func(self):
         return self.request.user == self.get_object().author
-    
+
     def form_valid(self, form):
         messages.success(self.request, "Post deleted!")
         return super().form_valid(form)
@@ -137,7 +140,8 @@ def post_detail(request, slug):
     is_favourited = False
 
     if request.user.is_authenticated:
-        is_favourited = Favourite.objects.filter(user=request.user, post=post).exists()
+        is_favourited = Favourite.objects.filter(
+            user=request.user, post=post).exists()
 
     if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
@@ -147,7 +151,8 @@ def post_detail(request, slug):
             comment.post = post
             comment.save()
             messages.add_message(
-                request, messages.SUCCESS, "Comment submitted, awaits admin approval"
+                request, messages.SUCCESS,
+                "Comment submitted, awaits admin approval"
             )
 
     comment_form = CommentForm()
@@ -182,10 +187,12 @@ def comment_edit(request, slug, comment_id):
             comment.approved = False
             comment.save()
             messages.add_message(
-                request, messages.SUCCESS, "Comment Updated, awaits admin approval"
+                request, messages.SUCCESS,
+                "Comment Updated, awaits admin approval"
             )
         else:
-            messages.add_message(request, messages.ERROR, "Error updating the comment!")
+            messages.add_message(request, messages.ERROR,
+                                 "Error updating the comment!")
 
     return HttpResponseRedirect(reverse("post_detail", args=[slug]))
 
@@ -215,7 +222,8 @@ def comment_delete(request, slug, comment_id):
 @login_required
 def toggle_favourite(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    favourite, created = Favourite.objects.get_or_create(user=request.user, post = post)
+    favourite, created = Favourite.objects.get_or_create(
+        user=request.user, post=post)
     if not created:
         favourite.delete()
     return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
@@ -224,7 +232,8 @@ def toggle_favourite(request, post_id):
 @login_required
 def remove_favourite(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    favourite, created = Favourite.objects.get_or_create(user=request.user, post = post)
+    favourite, created = Favourite.objects.get_or_create(
+        user=request.user, post=post)
     if not created:
         favourite.delete()
     return HttpResponseRedirect(reverse("my_favourites"))
@@ -232,5 +241,7 @@ def remove_favourite(request, post_id):
 
 @login_required
 def my_favourites(request):
-    favourites = Favourite.objects.filter(user=request.user).select_related("post")
-    return render(request, "blog/my_favourites.html", {"favourites": favourites})
+    favourites = Favourite.objects.filter(
+        user=request.user).select_related("post")
+    return render(
+        request, "blog/my_favourites.html", {"favourites": favourites})
