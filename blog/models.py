@@ -23,7 +23,8 @@ def image_extension_validator(value):
     to avoid error if no new file uploaded.
     """
     if hasattr(value, 'name'):
-        validator = FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])
+        validator = FileExtensionValidator(
+            allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])
         validator(value)
 
 
@@ -37,7 +38,8 @@ class Post(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
-    featured_image = CloudinaryField("image", validators=[image_extension_validator], default="placeholder")
+    featured_image = CloudinaryField(
+        "image", validators=[image_extension_validator], default="placeholder")
     content = CKEditor5Field("Post content", config_name="extends")
     excerpt = models.TextField(blank=True)
     continent = models.IntegerField(choices=CONTINENT, default=2)
@@ -57,8 +59,10 @@ class Comment(models.Model):
     Stores a single comment related to a User and Post
     """
 
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="commenter")
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="commenter")
     body = models.TextField()
     approved = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -74,8 +78,10 @@ class Favourite(models.Model):
     """
     Stores a single favourite post related to a User and Post
     """
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="favourites")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favourited_by")
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="favourites")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="favourited_by")
 
     class Meta:
         unique_together = ("user", "post")
