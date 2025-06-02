@@ -221,6 +221,9 @@ def comment_delete(request, slug, comment_id):
 
 @login_required
 def toggle_favourite(request, post_id):
+    """
+    View to add or remove a post from favourites when on post_detail.
+    """
     post = get_object_or_404(Post, id=post_id)
     favourite, created = Favourite.objects.get_or_create(
         user=request.user, post=post)
@@ -231,6 +234,9 @@ def toggle_favourite(request, post_id):
 
 @login_required
 def remove_favourite(request, post_id):
+    """
+    View to remove post from favourites when on "Favourites".
+    """
     post = get_object_or_404(Post, id=post_id)
     favourite, created = Favourite.objects.get_or_create(
         user=request.user, post=post)
@@ -241,6 +247,9 @@ def remove_favourite(request, post_id):
 
 @login_required
 def my_favourites(request):
+    """
+    View to list my favourites.
+    """
     favourites = Favourite.objects.filter(
         user=request.user).select_related("post")
     return render(
